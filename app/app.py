@@ -1,6 +1,6 @@
 from flask import Flask, request
 
-print("hello"
+print("hello")
 
 app = Flask(__name__)
 
