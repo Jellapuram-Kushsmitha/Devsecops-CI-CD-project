@@ -39,3 +39,13 @@ jobs:
           --exit-code 1 \
           --severity CRITICAL \
           my-flask-app    
+    
+    - name: SonarCloud Scan
+  uses: SonarSource/sonarcloud-github-action@v2
+  with:
+    args: >
+      -Dsonar.projectKey=Jellapuram-Kushsmitha_Devsecops-CI-CD-project
+      -Dsonar.organization=jellapuram-kushsmitha
+      -Dsonar.sources=.
+  env:
+    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
