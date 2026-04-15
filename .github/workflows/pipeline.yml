@@ -46,9 +46,12 @@ jobs:
           my-flask-app
 
     - name: Run Tests with Coverage
+      env:
+        # This maps the GitHub Secret to an Environment Variable
+        SECRET_KEY: ${{ secrets.SECRET_KEY }} 
       run: |
-        pip install pytest pytest-cov
-        pytest --cov=app --cov-report=xml:coverage.xml app/test_app.py      
+        pytest --cov=app --cov-report=xml app/test_app.py 
+      
 
     # 7. SonarCloud Scan
     - name: SonarCloud Scan
