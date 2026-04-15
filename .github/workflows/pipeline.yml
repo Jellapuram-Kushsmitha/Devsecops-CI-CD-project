@@ -45,6 +45,11 @@ jobs:
           --severity CRITICAL \
           my-flask-app
 
+    - name: Run Tests with Coverage
+      run: |
+        pip install pytest pytest-cov
+        pytest --cov=app --cov-report=xml      
+
     # 7. SonarCloud Scan
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@v2
@@ -53,6 +58,7 @@ jobs:
           -Dsonar.projectKey=Jellapuram-Kushsmitha_Devsecops-CI-CD-project
           -Dsonar.organization=jellapuram-kushsmitha
           -Dsonar.sources=.
+          -Dsonar.python.coverage.reportPaths=coverage.xml
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
