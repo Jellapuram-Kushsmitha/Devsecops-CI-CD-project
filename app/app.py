@@ -6,7 +6,8 @@ print("hello")
 app = Flask(__name__)
 
 # 🔐 Required for CSRF protection
-app.config['SECRET_KEY'] = 'supersecretkey123'
+import os
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-key-for-local-use')
 
 # 🔐 Enable CSRF protection
 csrf = CSRFProtect(app)

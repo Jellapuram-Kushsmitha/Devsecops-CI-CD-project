@@ -48,7 +48,7 @@ jobs:
     - name: Run Tests with Coverage
       run: |
         pip install pytest pytest-cov
-        pytest --cov=app --cov-report=xml      
+        pytest --cov=app --cov-report=xml:coverage.xml app/test_app.py      
 
     # 7. SonarCloud Scan
     - name: SonarCloud Scan
@@ -57,8 +57,10 @@ jobs:
         args: >
           -Dsonar.projectKey=Jellapuram-Kushsmitha_Devsecops-CI-CD-project
           -Dsonar.organization=jellapuram-kushsmitha
-          -Dsonar.sources=.
+          -Dsonar.sources=app
+          -Dsonar.exclusions=app/test_app.py
           -Dsonar.python.coverage.reportPaths=coverage.xml
+          -Dsonar.verbose=true
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
