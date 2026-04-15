@@ -10,26 +10,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # 1. Checkout code
     - name: Checkout Code
       uses: actions/checkout@v3
 
+    # 2. Setup Python
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.9'
 
+    # 3. Install dependencies
     - name: Install Dependencies
       run: |
         pip install -r app/requirements.txt
 
+    # 4. Check syntax
     - name: Check Syntax
       run: |
         python -m py_compile app/app.py
 
+    # 5. Build Docker Image
     - name: Build Docker Image
       run: |
         docker build -t my-flask-app ./app
 
+    # 6. Trivy Security Scan
     - name: Scan Docker Image with Trivy
       run: |
         docker run --rm \
@@ -39,6 +45,7 @@ jobs:
           --severity CRITICAL \
           my-flask-app
 
+    # 7. SonarCloud Scan
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@v2
       with:
@@ -46,5 +53,12 @@ jobs:
           -Dsonar.projectKey=Jellapuram-Kushsmitha_Devsecops-CI-CD-project
           -Dsonar.organization=jellapuram-kushsmitha
           -Dsonar.sources=.
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+    # 8. SonarCloud Quality Gate Check (NEW 🔥)
+    - name: SonarCloud Quality Gate Check
+      uses: SonarSource/sonarqube-quality-gate-action@v1
+      timeout-minutes: 5
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
