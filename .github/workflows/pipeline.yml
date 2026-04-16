@@ -49,9 +49,12 @@ jobs:
     - name: Run Tests with Coverage
       env:
         # This maps the GitHub Secret to an Environment Variable
-        APP_SECRET_KEY: ${{ secrets.APP_SECRET_KEY }}
+        APP_SECRET_KEY: test-secret-key
       run: |
-        pytest --cov=app --cov-report=xml:coverage.xml 
+        pytest app/test_app.py --cov=app --cov-report=xml:coverage.xml
+
+    - name: Check Coverage File
+      run: ls -l
       
 
     # 7. SonarCloud Scan
