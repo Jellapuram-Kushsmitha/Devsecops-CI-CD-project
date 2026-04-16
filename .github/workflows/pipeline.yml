@@ -24,6 +24,7 @@ jobs:
     - name: Install Dependencies
       run: |
         pip install -r app/requirements.txt
+        pip install pytest pytest-cov
 
     # 4. Check syntax
     - name: Check Syntax
@@ -50,7 +51,7 @@ jobs:
         # This maps the GitHub Secret to an Environment Variable
         SECRET_KEY: ${{ secrets.SECRET_KEY }} 
       run: |
-        pytest --cov=app --cov-report=xml app/test_app.py 
+        pytest --cov=app --cov-report=xml 
       
 
     # 7. SonarCloud Scan

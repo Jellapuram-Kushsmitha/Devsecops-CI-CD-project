@@ -1,15 +1,18 @@
 from flask import Flask, request
 from flask_wtf.csrf import CSRFProtect
+import os
 
 print("hello")
 
 app = Flask(__name__)
 
-# 🔐 Required for CSRF protection
-import os
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-key-for-local-use')
+# ✅ Secure SECRET KEY (no hardcoding)
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
-# 🔐 Enable CSRF protection
+if not app.config['SECRET_KEY']:
+    raise ValueError("SECRET_KEY environment variable not set")
+
+# ✅ Enable CSRF protection
 csrf = CSRFProtect(app)
 
 @app.route("/", methods=["GET"])
@@ -21,7 +24,6 @@ def login():
     username = request.form.get("username")
     password = request.form.get("password")
 
-    # intentionally insecure (for demo)
     if username == "admin" and password == "admin":
         return "Logged in!"
     return "Invalid credentials"
