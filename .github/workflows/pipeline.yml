@@ -49,7 +49,7 @@ jobs:
     - name: Run Tests with Coverage
       env:
         # This maps the GitHub Secret to an Environment Variable
-        SECRET_KEY: ${{ secrets.SECRET_KEY }} 
+        APP_SECRET_KEY: ${{ secrets.APP_SECRET_KEY }}
       run: |
         pytest --cov=app --cov-report=xml 
       

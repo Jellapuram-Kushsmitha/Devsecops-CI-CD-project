@@ -6,11 +6,11 @@ print("hello")
 
 app = Flask(__name__)
 
-# ✅ Secure SECRET KEY (no hardcoding)
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+# ✅ Secure SECRET KEY from environment
+app.config['SECRET_KEY'] = os.environ.get("APP_SECRET_KEY")
 
 if not app.config['SECRET_KEY']:
-    raise ValueError("SECRET_KEY environment variable not set")
+    raise ValueError("APP_SECRET_KEY environment variable not set")
 
 # ✅ Enable CSRF protection
 csrf = CSRFProtect(app)
