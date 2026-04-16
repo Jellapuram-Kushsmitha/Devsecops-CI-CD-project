@@ -51,7 +51,7 @@ jobs:
         # This maps the GitHub Secret to an Environment Variable
         APP_SECRET_KEY: ${{ secrets.APP_SECRET_KEY }}
       run: |
-        pytest --cov=app --cov-report=xml 
+        pytest --cov=app --cov-report=xml:coverage.xml 
       
 
     # 7. SonarCloud Scan
