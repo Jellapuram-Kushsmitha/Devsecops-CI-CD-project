@@ -56,6 +56,10 @@ jobs:
     - name: Check Coverage File
       run: ls -l
       
+    - name: Debug coverage file
+      run: |
+        ls -l
+        cat coverage.xml || true
 
     # 7. SonarCloud Scan
     - name: SonarCloud Scan
