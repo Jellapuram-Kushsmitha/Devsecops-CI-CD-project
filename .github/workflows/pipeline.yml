@@ -51,8 +51,9 @@ jobs:
       env:
         APP_SECRET_KEY: test-secret-key
       run: |
-        pip install pytest pytest-cov
         PYTHONPATH=app pytest app/test_app.py --cov=app --cov-report=xml:coverage.xml
+        sed -i 's|<source>.*</source>|<source>.</source>|g' coverage.xml
+        sed -i 's|filename="|filename="app/|g' coverage.xml
 
     # 8. Debug Coverage File
     - name: Debug coverage file
