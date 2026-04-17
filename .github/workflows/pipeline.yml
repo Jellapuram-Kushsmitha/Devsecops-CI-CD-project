@@ -52,7 +52,7 @@ jobs:
         APP_SECRET_KEY: test-secret-key
       run: |
         cd app
-        python -m pytest test_app.py --cov=. --cov-report=xml:../coverage.xml --import-mode=importlib
+        python -m pytest test_app.py --cov=. --cov-report=xml:../coverage.xml --cov-config=../.coveragerc
 
     # 8. Debug Coverage File
     - name: Debug coverage file
@@ -71,6 +71,7 @@ jobs:
           -Dsonar.exclusions=app/test_app.py
           -Dsonar.python.coverage.reportPaths=coverage.xml
           -Dsonar.python.version=3.9
+          -Dsonar.sources.inclusions=app/**
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
