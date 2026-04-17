@@ -5,7 +5,7 @@ import os
 app = Flask(__name__)
 
 # Safe default for testing
-app.config['SECRET_KEY'] = os.environ.get("APP_SECRET_KEY", "dev-secret")
+app.config.from_object('config.Config')
 
 csrf = CSRFProtect(app)
 

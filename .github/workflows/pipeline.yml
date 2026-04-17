@@ -51,7 +51,8 @@ jobs:
         # This maps the GitHub Secret to an Environment Variable
         APP_SECRET_KEY: test-secret-key
       run: |
-        pytest app/test_app.py --cov=app --cov-report=xml:coverage.xml
+        cd app
+        pytest test_app.py --cov=. --cov-report=xml:../coverage.xml
 
     - name: Check Coverage File
       run: ls -l
@@ -71,7 +72,7 @@ jobs:
           -Dsonar.sources=app
           -Dsonar.exclusions=app/test_app.py
           -Dsonar.python.coverage.reportPaths=coverage.xml
-          -Dsonar.verbose=true
+          -Dsonar.python.version=3.9
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
