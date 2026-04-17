@@ -46,23 +46,20 @@ jobs:
           --severity CRITICAL \
           my-flask-app
 
+    # 7. Run Tests with Coverage
     - name: Run Tests with Coverage
       env:
-        # This maps the GitHub Secret to an Environment Variable
         APP_SECRET_KEY: test-secret-key
       run: |
-        cd app
-        pytest test_app.py --cov=. --cov-report=xml:../coverage.xml
+        pytest app/test_app.py --cov=app --cov-report=xml:coverage.xml --import-mode=importlib
 
-    - name: Check Coverage File
-      run: ls -l
-      
+    # 8. Debug Coverage File
     - name: Debug coverage file
       run: |
         ls -l
         cat coverage.xml || true
 
-    # 7. SonarCloud Scan
+    # 9. SonarCloud Scan
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@v2
       with:
@@ -76,7 +73,7 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-    # 8. SonarCloud Quality Gate Check (NEW 🔥)
+    # 10. SonarCloud Quality Gate Check
     - name: SonarCloud Quality Gate Check
       uses: SonarSource/sonarqube-quality-gate-action@v1
       timeout-minutes: 5
