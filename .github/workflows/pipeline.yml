@@ -51,7 +51,8 @@ jobs:
       env:
         APP_SECRET_KEY: test-secret-key
       run: |
-        pytest app/test_app.py --cov=app --cov-report=xml:coverage.xml --import-mode=importlib
+        cd app
+        python -m pytest test_app.py --cov=. --cov-report=xml:../coverage.xml --import-mode=importlib
 
     # 8. Debug Coverage File
     - name: Debug coverage file
